@@ -1,0 +1,7 @@
+include 'workflows-v1'
+include 'contracts-v1'
+include 'workflows-v2'
+include 'contracts-v2'
+include 'contract-upgrade-tests'
+include 'clients'
+
