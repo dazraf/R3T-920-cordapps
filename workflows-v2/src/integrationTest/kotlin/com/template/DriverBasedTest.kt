@@ -2,6 +2,7 @@ package com.template
 
 import com.template.flows.GetNoteSummary
 import com.template.flows.IssueNote
+import com.template.flows.NoteSummary
 import com.template.flows.TransferNote
 import net.corda.core.contracts.Amount
 import net.corda.core.identity.CordaX500Name
@@ -34,13 +35,13 @@ class DriverBasedTest {
     assertEquals(bankA.name, partyBHandle.resolveName(bankA.name))
 
     val stateRef = partyAHandle.rpc.startFlow(::IssueNote, Amount.parseCurrency("1000.00 USD")).returnValue.getOrThrow()
-    assertEquals(1_000_00, getNoteBalanceForNode(partyAHandle))
+    assertEquals(NoteSummary(1_000_00, 0), getNoteBalanceForNode(partyAHandle))
     partyAHandle.rpc.startFlow(::TransferNote, stateRef, partyBHandle.nodeInfo.legalIdentities.first()).returnValue.getOrThrow()
-    assertEquals(1_000_00, getNoteBalanceForNode(partyBHandle))
-    assertEquals(0, getNoteBalanceForNode(partyAHandle))
+    assertEquals(NoteSummary(1_000_00, 0), getNoteBalanceForNode(partyBHandle))
+    assertEquals(NoteSummary(0, 0), getNoteBalanceForNode(partyAHandle))
   }
 
-  private fun getNoteBalanceForNode(node: NodeHandle): Long {
+  private fun getNoteBalanceForNode(node: NodeHandle): NoteSummary {
     return node.rpc.startFlow(::GetNoteSummary).returnValue.getOrThrow()
   }
 

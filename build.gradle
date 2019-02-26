@@ -1,13 +1,14 @@
+
 buildscript {
     ext {
         // USE THE FOLLOWING TO SWITCH BETWEEN ENTERPRISE OR OPEN SOURCE
         // ENTERPRISE:
-//        corda_release_group = 'com.r3.corda'
-//        corda_release_version = '4.0-RC03'
+        corda_release_group = 'com.r3.corda'
+        corda_release_version = '4.0-RC03'
 
         // OPEN SOURCE:
-        corda_release_group = 'net.corda'
-        corda_release_version = '4.0'
+//        corda_release_group = 'net.corda'
+//        corda_release_version = '4.0'
 
         corda_gradle_plugins_version = '4.0.40'
         kotlin_version = '1.2.71'
@@ -20,6 +21,8 @@ buildscript {
         log4j_version = '2.9.1'
         repoPath = "${rootProject.projectDir}/../../../local-net/bin/repository/"
     }
+
+    println(ext.repoPath)
 
     repositories {
         mavenLocal()
